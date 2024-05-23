@@ -1,21 +1,29 @@
-#include <iostream>
 #include <bitset>
+#include <iostream>
 
-int main () {
-    std::bitset<8> bits{ 0b0011'1010 };
-    std::cout << "bitset size: " << bits.size() << "\n";
-    std::cout << bits.count() << " bits are set to true\n";
-    std::cout << std::boolalpha;
-    std::cout << "are all bits set to true?: " << bits.all() << "\n";
-    std::cout << "are some bits true?: " << bits.any() << "\n";
-    std::cout << "no bits are true?: " << bits.none() << "\n";
+// rotl = rotate left
+std::bitset<4> rotl_my_version(std::bitset<4> bits) {
+	std::bitset<4> result {bits << 1};
+	result[0] = bits.test(3);
+	return result;
+}
 
-    std::cout << (bits << 2) << " shifted twice\n";
-    std::cout << ~bits << " logical not\n";
-    std::cout << (std::bitset<4> {0b0101} | std::bitset<4> {0b0110}) << " ORed two bitsets\n";
-    std::cout << (std::bitset<4> {0b0110} & std::bitset<4> {0b0010}) << " ANDed two bitsets\n";
-    std::cout << (std::bitset<4> {0b1100} ^ std::bitset<4> {0b0111}) << " XORed two bitsets\n";
-    
- 
-    return 0;
+std::bitset<4> rotl_better(std::bitset<4> bits) {
+	bool msb = bits.test(3);
+	bits <<= 1;
+	if(msb) {
+		bits[0] = msb;
+	}
+	return bits;
+}
+
+int main()
+{
+	std::bitset<4> bits1{ 0b0001 };
+	std::cout << rotl_my_version(bits1) << '\n';
+
+	std::bitset<4> bits2{ 0b1001 };
+	std::cout << rotl_better(bits2) << '\n';
+
+	return 0;
 }
