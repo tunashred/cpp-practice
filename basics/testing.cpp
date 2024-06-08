@@ -1,11 +1,19 @@
 #include <iostream>
-#include <cstdint>
 
-int main()
-{
-    //std::int8_t and std::uint8_t are actually chars, not integers ;d
-    std::int8_t myInt{65};
-    std::cout << myInt << '\n';
+consteval auto compileTime(auto val) {
+    return val;
+}
 
-	return 0;
+constexpr int moo(int x, int y) {
+    return x > y ? x : y;
+}
+
+int main() {
+    constexpr int g { moo(6, 9) };
+    std::cout << g << '\n';
+
+    std::cout << compileTime(moo(4, 2)) << '\n';
+
+//    int x = 420;
+//    std::cout << moo(x, 6);
 }
