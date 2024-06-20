@@ -1,0 +1,9 @@
+1. Compile:
+clang -c test.cpp -o test.o
+
+2. Generate assembly code from object file
+objdump -D test.o > disassemly_clang.txt
+
+3. To demangle function
+c++filt __Z3addid
+
