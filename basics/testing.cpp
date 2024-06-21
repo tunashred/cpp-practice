@@ -1,19 +1,21 @@
 #include <iostream>
 
-consteval auto compileTime(auto val) {
-    return val;
+int add(int x, int y) {
+    return x + y;
 }
 
-constexpr int moo(int x, int y) {
-    return x > y ? x : y;
-}
+template <typename T>
+T add(T x, T y) = delete;
 
 int main() {
-    constexpr int g { moo(6, 9) };
-    std::cout << g << '\n';
+    add(69, 420);
+    // calling deleted functions will halt compilation
+    add(6.9 , 4.2); // function deleted
 
-    std::cout << compileTime(moo(4, 2)) << '\n';
+    add(4.0, 2.0); //  function deleted
 
-//    int x = 420;
-//    std::cout << moo(x, 6);
+    add('c', 'a'); //  function deleted
+
+
+    return 0;
 }
